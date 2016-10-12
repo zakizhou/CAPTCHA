@@ -11,6 +11,8 @@ NUMBERS = 4
 
 graph = tf.Graph()
 
+import reader
+
 def convolution(input_images,filter_shape):
     filter = tf.Variable(tf.random_normal(filter_shape),dtype=tf.float32,name="filter")
     bias = tf.Variable(tf.zeros([filter_shape[3]]),name="bias")
@@ -28,8 +30,7 @@ def fully_connect(inputs,hidden_units):
     return logits
 
 with graph.as_default():
-    inputs = tf.placeholder(dtype=tf.float32,shape=[None,WIDTH,HEIGHT,CHANNELS],name="inputs")
-    labels = tf.placeholder(dtype=tf.float32,shape=[None,NUMBERS,CLASSES],name="labels")
+    batch_images,batch_labels  = reader.inputs("~/TensorFlow/application/CAPTCHA/images/PNG/",128)
 
     reshaped_labels = tf.reshape(labels,[-1,NUMBERS*CLASSES])
 
@@ -66,6 +67,8 @@ with graph.as_default():
 with tf.Session(graph=graph) as sess:
     init = tf.initialize_all_variables()
     sess.run(init)
+    coord = tf.train.Coordinator()
+    tf.train.start_queue_runners(sess=sess,coord=coord)
     saver = tf.train.Saver()
 
     saver.save(sess,"/home/zhoujie/TensorFlow/application/CAPTCHA/proto_buffer/CNN")
