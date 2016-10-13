@@ -1,22 +1,19 @@
 #!/usr/bin/python
-
 import tensorflow as tf
-import sys
 
-def read_and_decode(filename_queue):
-    reader = tf.WholeFileReader()
-    key,value = reader.read(filename_queue)
-    image = tf.image.decode_png(value)
-    return image
+def read_and_decode(path):
+    os.chdir(path)
+    filenames = os.listdir(os.getcwd())
+    labels = map(lambda x:x.split(".")[0],filenames)
+    filename_tensor = tf.convert_to_tensor(filenames)
+    label_tensor = tf.convert_to_tensor(labels)
+    input_queue = tf.train.slice_input_producer([filename_tensor,label_tensor])
+    image_name,label = input_queue
+    image_file = tf.read_file(image_name)
+    image = tf.image.decode_png(image_file)
+    return image,label
 
-
-def inputs(filename,batch_size):
-    filename_queue = tf.train.string_input_producer([filename],num_epoches=None)
-
-    image = read_and_decode([filename])
-
-    batch_images = tf.train.shuffle_batch([image],batch_size=batch_size)
-
-    return batch_images
-
-
+def inputs(path,batch_size):
+    image,label = read_and_decode(path)
+    image_batch,label_batch  = tf.train.shuffle_batch([image,label],batch_size=batch_size)
+    return image_batch,label_batch
