@@ -39,7 +39,7 @@ def fully_connect(inputs,hidden_units):
     logits = tf.nn.xw_plus_b(inputs,Weights,bias,name="logits")
     return logits
 
-    images,labels = inputs("/home/zhoujie/TensorFlow/application/CAPTCHA/images/PNG/",128,1000,3000)
+images,labels = inputs("/home/zhoujie/TensorFlow/application/CAPTCHA/images/PNG/",128,1000,3000)
 
 
 def inference(inputs):
@@ -73,7 +73,7 @@ def loss(logits,lables):
 
     return cross_entropy
 
-def accuracy(logits,labels)
+def accuracy(logits,labels):
     reshaped_logits = tf.reshape(logits,[-1,NUMBERS,CLASSES])
 
     inference = tf.argmax(reshaped_logits,2)
