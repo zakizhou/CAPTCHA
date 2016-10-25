@@ -11,7 +11,7 @@ import captcha_inputs
 def train():
     images,labels = captcha_inputs.inputs("/home/zhoujie/TensorFlow/application/CAPTCHA/images/PNG",5,100,300)
     logits = captcha.inference(images)
-    loss = loss(logits,labels)
+    loss = captcha.loss(logits,labels)
     train_op = captcha.train(loss)
     with tf.Session() as sess:
         init = tf.initialize_all_variables()

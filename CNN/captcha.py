@@ -10,16 +10,16 @@ CHANNELS = 3
 CLASSES = 10
 NUMBERS = 4
 
-def convolution(input_images,filter_shape):
-    filter = tf.get_variable("filter",
+def convolution(input_images,kernel_shape):
+    kernel = tf.get_variable("filter",
                              shape=filter_shape,
                              initializer=tf.random_normal_initializer(stddev=0.1),
                              dtype=tf.float32)
     bias = tf.get_variable("bias",
-                            shape=[filter_shape[-1]],
+                            shape=[kernel_shape[-1]],
                             tf.constant_initializer(value=0),
                             dtype=tf.float32)
-    conv = tf.nn.conv2d(input_images,filter,strides=[1,1,1,1],padding="SAME",name="conv")
+    conv = tf.nn.conv2d(input_images,kernel,strides=[1,1,1,1],padding="SAME",name="conv")
     conv_bias = tf.add(conv,bias,name="add_bias")
     relu = tf.nn.relu(conv_bias,name="relu")
     pool = tf.nn.max_pool(relu,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME",name="pool")
@@ -39,9 +39,6 @@ def fully_connect(inputs,hidden_units):
     logits = tf.nn.xw_plus_b(inputs,Weights,bias,name="logits")
     return logits
 
-images,labels = inputs("/home/zhoujie/TensorFlow/application/CAPTCHA/images/PNG/",128,1000,3000)
-
-
 def inference(inputs):
 
     with tf.variable_scope("conv_1"):
@@ -56,7 +53,8 @@ def inference(inputs):
     with tf.variable_scope("conv_4"):
         conv_4 = convolution(conv_3,[5,5,256,128])
 
-    reshaped_conv_4 = tf.reshape(conv_4,[-1,10*20*128],name="reshaped_conv_4")
+    first_dim = conv_4.get_shape().as_list()[0]
+    reshaped_conv_4 = tf.reshape(conv_4,[first_dim,-1],name="reshaped_conv_4")
 
     with  tf.variable_scope("fully_connect"):
         fc = fully_connect(reshaped_conv_4,1024)
