@@ -83,6 +83,6 @@ def accuracy(logits,labels):
 
     return accuracy
 
-def train(cross_entropy):
-    optimizer = tf.train.GradientDescentOptimizer(0.01).minimize(cross_entropy,name="optimizer")
+def train(cross_entropy,learning_rate=0.01):
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cross_entropy,name="optimizer")
     return optimizer
