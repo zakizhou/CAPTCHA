@@ -10,7 +10,12 @@ import captcha_inputs
 
 def train():
     images,labels = captcha_inputs.inputs("/home/zhoujie/TensorFlow/application/CAPTCHA/images/PNG",5,100,300)
-    logits = captcha.inference(images)
+    eval_images,eval_labels = captcha_inputs("/home/zhoujie/TensorFlow/application/CAPTCHA/eval_images/PNG",5,100,300)
+    with tf.variable_scope("inference") as scope:
+         logits = captcha.inference(images)
+         scope.reuse_variables()
+         eval_logits = captcha.inference(eval_images)
+    accuracy = captcha.evaluation(eval_logits,eval_labels)
     loss = captcha.loss(logits,labels)
     train_op = captcha.train(loss)
     with tf.Session() as sess:
