@@ -41,7 +41,7 @@ def convolution(input_images, kernel_shape):
 def fully_connect(inputs, hidden_units):
     former_units = inputs.get_shape().as_list()[-1]
     weights = tf.get_variable("weights",
-                              shape=[former_units,hidden_units],
+                              shape=[former_units, hidden_units],
                               initializer=tf.random_normal_initializer(stddev=0.1),
                               dtype=tf.float32)
     bias = tf.get_variable("bias",

@@ -34,4 +34,4 @@ def inputs(path, batch_size, min_after_dequeue, capacity):
                                                       batch_size=batch_size,
                                                       min_after_dequeue=min_after_dequeue,
                                                       capacity=capacity)
-    return image_batch,label_batch
+    return image_batch, label_batch

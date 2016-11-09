@@ -10,6 +10,7 @@ import random
 import string
 import argparse
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-p",
@@ -23,7 +24,7 @@ def main():
     #parser.add_argment("-")
     maker = ImageCaptcha()
     args = vars(parser.parse_args())
-    if("path" not in args):
+    if "path" not in args:
         path = ""
     else:
         print("2")
@@ -31,7 +32,8 @@ def main():
     print(args)
     for i in range(int(args['number'])):
         number_to_write = "".join([random.choice(string.digits) for j in range(4)])
-        maker.write(number_to_write,path+str(i)+"_"+number_to_write+".PNG")
-        
+        maker.write(number_to_write, path+str(i)+"_"+number_to_write+".PNG")
+
+
 if __name__ == "__main__":
     main()
