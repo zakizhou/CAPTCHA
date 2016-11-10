@@ -21,13 +21,11 @@ def main():
                         "--number",
                         required=True,
                         help="number of images generated")
-    #parser.add_argment("-")
     maker = ImageCaptcha()
     args = vars(parser.parse_args())
     if "path" not in args:
         path = ""
     else:
-        print("2")
         path = args['path']
     print(args)
     for i in range(int(args['number'])):
