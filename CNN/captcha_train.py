@@ -10,8 +10,8 @@ import captcha_inputs
 
 
 def main():
-    images, labels = captcha_inputs.inputs("/home/zhoujie/TensorFlow/application/CAPTCHA/images/PNG", 5, 100, 300)
-    eval_images, eval_labels = captcha_inputs("/home/zhoujie/TensorFlow/application/CAPTCHA/eval_images/PNG", 5, 100, 300)
+    images, labels = captcha_inputs.inputs("/home/windows98/TensorFlow/application/CAPTCHA/images/PNG", 5, 100, 300)
+    eval_images, eval_labels = captcha_inputs("/home/windows98/TensorFlow/application/CAPTCHA/eval_images/PNG", 5, 100, 300)
     with tf.variable_scope("inference") as scope:
         logits = captcha.inference(images)
         scope.reuse_variables()
@@ -20,7 +20,9 @@ def main():
     loss = captcha.loss(logits, labels)
     train_op = captcha.train(loss)
     with tf.Session() as sess:
-        init = tf.initialize_all_variables()
+        init_all = tf.initialize_all_variables()
+        init_local = tf.initialize_local_variables()
+        init = tf.group(init_all, init_local)
         sess.run(init)
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(sess=sess, coord=coord)
