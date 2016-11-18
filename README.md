@@ -1,7 +1,24 @@
 # CAPTCHA
-Before we start training, we need to make some data for training.
-To generate 50000 images in the path ~/images,just do:
-```python
-python CNN/captcha_generator.py -n 50000 -p "~/images/"
-```
+This repo is a tutorial for training a cnn model for recognizing
+numbers of captcha
 
+##USAGE
+Before run training, training images and validation images should be 
+ generated, change to the root dir of this project and run
+ ```
+python CNN/captcha_producer.py -n 50000 -p "images/train"
+ ```
+this will generate 50000 training images in the images/train/
+
+for validation set:
+ ```
+python CNN/captcha_producer.py -n 10000 -p "images/validation"
+ ```
+make sure you have make those dir already
+
+For running:
+ ```
+python CNN/captcha_train.py"
+ ```
+
+I will soon add multi-gpus training to this repo
