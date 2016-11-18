@@ -2,13 +2,14 @@
 """
 Created on Thu Oct 27 21:10:47 2016
 
-@author: Windo
+@author: jie.zhou@sjtu.edu.cn
 """
 
 from captcha.image import ImageCaptcha
 import random
 import string
 import argparse
+import os
 
 
 def main():
@@ -21,7 +22,9 @@ def main():
                         "--number",
                         required=True,
                         help="number of images generated")
-    maker = ImageCaptcha()
+    producer = ImageCaptcha(width=128,
+                            height=64,
+                            font_sizes=[40])
     args = vars(parser.parse_args())
     if "path" not in args:
         path = ""
@@ -29,8 +32,8 @@ def main():
         path = args['path']
     print(args)
     for i in range(int(args['number'])):
-        number_to_write = "".join([random.choice(string.digits) for j in range(4)])
-        maker.write(number_to_write, path+str(i)+"_"+number_to_write+".PNG")
+        number_to_write = "".join([random.choice(string.digits) for _ in range(4)])
+        producer.write(number_to_write, os.path.join(path, str(i)+"_"+number_to_write+".png"))
 
 
 if __name__ == "__main__":
