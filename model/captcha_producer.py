@@ -30,7 +30,6 @@ def main():
         path = ""
     else:
         path = args['path']
-    print(args)
     for i in range(int(args['number'])):
         number_to_write = "".join([random.choice(string.digits) for _ in range(4)])
         producer.write(number_to_write, os.path.join(path, str(i)+"_"+number_to_write+".png"))
