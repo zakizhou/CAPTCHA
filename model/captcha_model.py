@@ -9,6 +9,7 @@ import tensorflow as tf
 
 BATCH_SIZE = 128
 NUM_EXAMPLES_PER_EPOCH = 50000
+VALIDATION_SIZE = 10000
 WIDTH = 128
 HEIGHT = 64
 CHANNELS = 3
@@ -139,16 +140,16 @@ def loss(logits, labels):
     return cross_entropy
 
 
-def accuracy(logits, labels):
-    reshaped_logits = tf.reshape(logits, [-1, NUMBERS, CLASSES])
-    inference = tf.argmax(reshaped_logits, 2)
-    true_labels = tf.argmax(labels, 2)
-    equal = tf.reduce_all(tf.equal(inference, true_labels), 1)
+def evaluation(logits, labels):
+    prediction = tf.argmax(logits, 2)
+    actual = tf.argmax(labels, 2)
+    equal = tf.equal(prediction, actual)
+    # equal = tf.reduce_all(equal, 1)
     accuracy = tf.reduce_mean(tf.cast(equal, tf.float32), name="accuracy")
     return accuracy
 
 
-def train(loss, learning_rate=0.0005):
+def train(loss, learning_rate=0.00001):
     optimizer = tf.train.GradientDescentOptimizer(learning_rate)
     train_op = optimizer.minimize(loss)
     return train_op
