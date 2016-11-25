@@ -18,18 +18,18 @@ VALIDATION_MIN_AFTER_DEQUEUE = 4000
 
 
 def main():
-    # filename_queue = tf.train.string_input_producer(["../images/tfrecords/train.tfrecords"])
-    # image, label = captcha_inputs.read_records(filename_queue)
-    # images, labels = captcha_inputs.records_inputs(image, label, MIN_AFTER_DEQUEUE)
+    filename_queue = tf.train.string_input_producer(["../images/tfrecords/train.tfrecords"])
+    image, label = captcha_inputs.read_records(filename_queue)
+    images, labels = captcha_inputs.records_inputs(image, label, MIN_AFTER_DEQUEUE)
 
-    # validation_filename_queue = tf.train.string_input_producer(["../images/tfrecords/validation.tfrecords"])
-    # validation_image, validation_label = captcha_inputs.read_records(validation_filename_queue)
-    # validation_images, validation_labels = captcha_inputs.records_inputs(validation_image,
-    #                                                                      validation_label,
-    #                                                                      VALIDATION_MIN_AFTER_DEQUEUE)
+    validation_filename_queue = tf.train.string_input_producer(["../images/tfrecords/validation.tfrecords"])
+    validation_image, validation_label = captcha_inputs.read_records(validation_filename_queue)
+    validation_images, validation_labels = captcha_inputs.records_inputs(validation_image,
+                                                                         validation_label,
+                                                                         VALIDATION_MIN_AFTER_DEQUEUE)
 
-    images, labels = captcha_inputs.inputs("../images/train", MIN_AFTER_DEQUEUE)
-    validation_images, validation_labels = captcha_inputs.inputs("../images/validation", VALIDATION_MIN_AFTER_DEQUEUE)
+    # images, labels = captcha_inputs.inputs("../images/train", MIN_AFTER_DEQUEUE)
+    # validation_images, validation_labels = captcha_inputs.inputs("../images/validation", VALIDATION_MIN_AFTER_DEQUEUE)
 
     # images, labels = captcha_inputs.inputs("/home/windows98/TensorFlow/application/CAPTCHA/images/"
     # , MIN_AFTER_DEQUEUE)
@@ -79,4 +79,4 @@ def main():
 
 
 if __name__ == "__main__":
-   main()
+    main()

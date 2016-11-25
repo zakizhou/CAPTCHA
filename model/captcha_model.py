@@ -20,7 +20,6 @@ NUMBERS = 4
 def inference(inputs):
 
     with tf.variable_scope("conv_pool_1"):
-        print("conv 1: ")
         kernel = tf.get_variable(name="kernel",
                                  shape=[5, 5, 3, 48],
                                  initializer=tf.truncated_normal_initializer(stddev=0.05),
@@ -33,20 +32,17 @@ def inference(inputs):
                             filter=kernel,
                             strides=[1, 1, 1, 1],
                             padding="SAME")
-        print(conv.get_shape())
         conv_bias = tf.nn.bias_add(value=conv,
                                    bias=biases,
                                    name="add_biases")
-        active = tf.nn.relu(conv_bias)
-        pool = tf.nn.max_pool(value=active,
+        relu = tf.nn.relu(conv_bias)
+        pool = tf.nn.max_pool(value=relu,
                               ksize=[1, 2, 2, 1],
                               strides=[1, 2, 2, 1],
                               padding="SAME",
                               name="pooling")
-        print(pool.get_shape())
 
     with tf.variable_scope("conv_pool_2"):
-        print("conv 2: ")
         kernel = tf.get_variable(name="kernel",
                                  shape=[5, 5, 48, 64],
                                  initializer=tf.truncated_normal_initializer(stddev=0.05),
@@ -59,49 +55,42 @@ def inference(inputs):
                             filter=kernel,
                             strides=[1, 1, 1, 1],
                             padding="SAME")
-        print(conv.get_shape())
         conv_bias = tf.nn.bias_add(value=conv,
                                    bias=biases,
                                    name="add_biases")
-        active = tf.nn.relu(conv_bias)
-        pool = tf.nn.max_pool(value=active,
+        relu = tf.nn.relu(conv_bias)
+        pool = tf.nn.max_pool(value=relu,
                               ksize=[1, 2, 1, 1],
                               strides=[1, 2, 1, 1],
                               padding="SAME",
                               name="pooling")
-        print(pool.get_shape())
     with tf.variable_scope("conv_pool_3"):
-        print("conv 3: ")
         kernel = tf.get_variable(name="kernel",
                                  shape=[5, 5, 64, 128],
                                  initializer=tf.truncated_normal_initializer(stddev=0.05),
                                  dtype=tf.float32)
         biases = tf.get_variable(name="biases",
-                               shape=[128],
-                               initializer=tf.constant_initializer(value=0.),
-                               dtype=tf.float32)
+                                 shape=[128],
+                                 initializer=tf.constant_initializer(value=0.),
+                                 dtype=tf.float32)
         conv = tf.nn.conv2d(input=pool,
                             filter=kernel,
                             strides=[1, 1, 1, 1],
                             padding="SAME")
-        print(conv.get_shape())
         conv_bias = tf.nn.bias_add(value=conv,
                                    bias=biases,
                                    name="add_biases")
-        active = tf.nn.relu(conv_bias)
-        pool = tf.nn.max_pool(value=active,
+        relu = tf.nn.relu(conv_bias)
+        pool = tf.nn.max_pool(value=relu,
                               ksize=[1, 2, 2, 1],
                               strides=[1, 2, 2, 1],
                               padding="SAME",
                               name="pooling")
-        print(pool.get_shape())
     reshape = tf.reshape(pool,
                          shape=[BATCH_SIZE, -1],
                          name="reshape")
-    print(reshape.get_shape())
     dims = reshape.get_shape().as_list()[-1]
     with tf.variable_scope("fully_conn"):
-        print("fully_conn: ")
         weights = tf.get_variable(name="weights",
                                   shape=[dims, 2048],
                                   initializer=tf.truncated_normal_initializer(stddev=0.05),
@@ -114,9 +103,7 @@ def inference(inputs):
                                  weights=weights,
                                  biases=biases)
         conn = tf.nn.relu(output)
-        print(conn.get_shape())
     with tf.variable_scope("output"):
-        print("output: ")
         weights = tf.get_variable(name="weights",
                                   shape=[2048, NUMBERS * CLASSES],
                                   initializer=tf.truncated_normal_initializer(stddev=0.05),
@@ -128,7 +115,6 @@ def inference(inputs):
         logits = tf.nn.xw_plus_b(x=conn,
                                  weights=weights,
                                  biases=biases)
-        print(logits.get_shape())
         reshape = tf.reshape(logits, shape=[BATCH_SIZE, NUMBERS, CLASSES])
     return reshape
 
