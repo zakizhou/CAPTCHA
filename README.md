@@ -25,5 +25,5 @@ I will soon add multi-gpus training to this repo
 
 ##Benchmark
 After 40 minutes training on single tesla K20m, this model achieved 
-around 80% accuracy, adjusting the scale of parameters or adding dropout
+around 86% accuracy, adjusting the scale of parameters or adding dropout
 should still improve this performance
