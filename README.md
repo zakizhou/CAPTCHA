@@ -18,7 +18,12 @@ make sure you have make those dir already
 
 For running:
  ```
-python CNN/captcha_train.py"
+python CNN/captcha_train.py
  ```
 
 I will soon add multi-gpus training to this repo
+
+##Benchmark
+After 40 minutes training on single tesla K20m, this model achieved 
+around 80% accuracy, adjusting the scale of parameters or adding dropout
+should still improve this performance
