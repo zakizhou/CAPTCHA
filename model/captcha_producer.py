@@ -22,14 +22,16 @@ def main():
                         "--number",
                         required=True,
                         help="number of images generated")
-    producer = ImageCaptcha(width=128,
-                            height=64,
+    producer = ImageCaptcha(width=125,
+                            height=65,
                             font_sizes=[40])
     args = vars(parser.parse_args())
     if "path" not in args:
         path = ""
     else:
         path = args['path']
+    if not os.path.exists(path):
+        os.makedirs(path)
     for i in range(int(args['number'])):
         number_to_write = "".join([random.choice(string.digits) for _ in range(4)])
         producer.write(number_to_write, os.path.join(path, str(i)+"_"+number_to_write+".png"))
