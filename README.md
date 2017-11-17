@@ -59,6 +59,7 @@ Before run training, training and validation images should be
  mkdir -p images/train
  mkdir -p images/validation
  mkdir -p tfrecords
+ mkdir -p save
 python captcha_producer.py -n 30000 -p images/train
  ```
 This will generate 30000 training images in the images/train/ and also convert infomation about 
@@ -66,7 +67,7 @@ these images into `tfrecords/train.tfrecords` file.
 
 for validation set:
  ```
-python CNN/captcha_producer.py -n 3000 -p "images/validation"
+python captcha_producer.py -n 3000 -p "images/validation"
  ```
 
 Now you can run this model with
