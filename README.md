@@ -19,7 +19,8 @@ a small convolutional neural network with TensorFlow to recognize it.
 For simplicity, images will only contain four digits with noise
 
 **we say a image is classified correctly if and only if four digits inside this image are all classified correctly**
-
+a sample image here
+[image](https://raw.githubusercontent.com/zakizhou/CAPTCHA/master/2_2704.png)
 ## requirements
 python 2.7 with following packages installed should work fine
 1. numpy
@@ -50,6 +51,9 @@ Before run training, training and validation images should be
  generated, change to the root dir of this repo and run
  ```
  cd CAPTCHA
+ mkdir -p images/train
+ mkdir -p images/validation
+ mkdir -p tfrecords
 python captcha_producer.py -n 30000 -p images/train
  ```
 This will generate 30000 training images in the images/train/ and also convert infomation about 
