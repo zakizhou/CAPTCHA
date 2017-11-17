@@ -19,10 +19,10 @@ a small convolutional neural network with TensorFlow to recognize it.
 For simplicity, images will only contain four digits with noise
 
 **we say a image is classified correctly if and only if four digits inside this image are all classified correctly**
-a sample image here
+
+Two sample images are listed below
 
 ![image1](https://raw.githubusercontent.com/zakizhou/CAPTCHA/master/2_2704.png)
-
 
 ![image2](https://raw.githubusercontent.com/zakizhou/CAPTCHA/master/3_5723.png)
 
